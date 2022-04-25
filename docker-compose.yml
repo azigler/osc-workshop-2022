@@ -18,10 +18,10 @@ services:
       - '443:443'
       - '2255:22'
     volumes:
-      - '$OSC_PATH/gitlab/config:/etc/gitlab'
-      - '$OSC_PATH/gitlab/logs:/var/log/gitlab'
-      - '$OSC_PATH/gitlab/data:/var/opt/gitlab'
-      - '$OSC_PATH/gitlab/nginx:/nginx'
+      - '/home/ubuntu/osc-workshop-2022/gitlab/config:/etc/gitlab'
+      - '/home/ubuntu/osc-workshop-2022/gitlab/logs:/var/log/gitlab'
+      - '/home/ubuntu/osc-workshop-2022/gitlab/data:/var/opt/gitlab'
+      - '/home/ubuntu/osc-workshop-2022/gitlab/nginx:/nginx'
     shm_size: '256m'
   healthchecks:
     image: lscr.io/linuxserver/healthchecks
@@ -40,7 +40,7 @@ services:
       - SUPERUSER_EMAIL=me@andrewzigler.com
       - SUPERUSER_PASSWORD=argonaut
     volumes:
-      - $OSC_PATH/healthchecks:/config
+      - '/home/ubuntu/osc-workshop-2022/healthchecks:/config'
     ports:
       - 8000:8000
     restart: always
@@ -51,5 +51,5 @@ services:
     ports:
       - '8005:8005'
     volumes:
-      - '$OSC_PATH/deckofcards:/src'
+      - '/home/ubuntu/osc-workshop-2022/deckofcards:/src'
     shm_size: '256m'
