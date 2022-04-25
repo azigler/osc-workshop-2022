@@ -7,11 +7,11 @@ services:
     hostname: 'gitlab.andrewzigler.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.andrewzigler.com'
+        external_url 'https://gl1.andrewzigler.com'
         gitlab_rails['gitlab_shell_ssh_port'] = 2255
         letsencrypt['enable'] = true
         letsencrypt['contact_emails'] = ['me@andrewzigler.com']
-        mattermost_external_url 'https://mattermost.andrewzigler.com'
+        mattermost_external_url 'https://mm1.andrewzigler.com'
         nginx['custom_nginx_config'] = "include /nginx/*.conf;"
     ports:
       - '80:80'
@@ -29,7 +29,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - SITE_ROOT=https://healthchecks.andrewzigler.com
+      - SITE_ROOT=https://hc1.andrewzigler.com
       - SITE_NAME=Healthchecks
       - DEFAULT_FROM_EMAIL=me@andrewzigler.com
       - EMAIL_HOST=andrewzigler.com
