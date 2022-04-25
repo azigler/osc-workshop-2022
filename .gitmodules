@@ -1,0 +1,3 @@
+[submodule "deckofcards"]
+	path = deckofcards
+	url = https://github.com/azigler/deckofcards

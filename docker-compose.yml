@@ -1,0 +1,55 @@
+version: '3.6'
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    container_name: gitlab
+    restart: always
+    hostname: 'gitlab.andrewzigler.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.andrewzigler.com'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2255
+        letsencrypt['enable'] = true
+        letsencrypt['contact_emails'] = ['me@andrewzigler.com']
+        mattermost_external_url 'https://mattermost.andrewzigler.com'
+        nginx['custom_nginx_config'] = "include /nginx/*.conf;"
+    ports:
+      - '80:80'
+      - '443:443'
+      - '2255:22'
+    volumes:
+      - '$OSC_PATH/gitlab/config:/etc/gitlab'
+      - '$OSC_PATH/gitlab/logs:/var/log/gitlab'
+      - '$OSC_PATH/gitlab/data:/var/opt/gitlab'
+      - '$OSC_PATH/gitlab/nginx:/nginx'
+    shm_size: '256m'
+  healthchecks:
+    image: lscr.io/linuxserver/healthchecks
+    container_name: healthchecks
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - SITE_ROOT=https://healthchecks.andrewzigler.com
+      - SITE_NAME=Healthchecks
+      - DEFAULT_FROM_EMAIL=me@andrewzigler.com
+      - EMAIL_HOST=andrewzigler.com
+      - EMAIL_PORT=25
+      - EMAIL_HOST_USER=andrew
+      - EMAIL_HOST_PASSWORD=argonaut
+      - EMAIL_USE_TLS=False
+      - SUPERUSER_EMAIL=me@andrewzigler.com
+      - SUPERUSER_PASSWORD=argonaut
+    volumes:
+      - $OSC_PATH/healthchecks:/config
+    ports:
+      - 8000:8000
+    restart: always
+  deckofcards:
+    container_name: deckofcards
+    build: ./deckofcards
+    restart: always
+    ports:
+      - '8005:8005'
+    volumes:
+      - '$OSC_PATH/deckofcards:/src'
+    shm_size: '256m'

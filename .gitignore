@@ -1,0 +1,6 @@
+.DS_STORE
+gitlab/config/*
+gitlab/data/*
+gitlab/logs/*
+healthchecks/hc.sqlite
+healthchecks/local_settings.py
