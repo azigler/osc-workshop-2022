@@ -4,7 +4,7 @@ services:
     image: 'gitlab/gitlab-ce:latest'
     container_name: gitlab
     restart: always
-    hostname: 'gitlab.andrewzigler.com'
+    hostname: 'gl1.andrewzigler.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gl1.andrewzigler.com'
