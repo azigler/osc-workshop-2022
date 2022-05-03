@@ -31,12 +31,12 @@ services:
     tmpfs:
       - /tmp
     volumes:
-      - ./mattermost/app/mattermost/config:/mattermost/config:rw
-      - ./mattermost/app/mattermost/data:/mattermost/data:rw
-      - ./mattermost/app/mattermost/logs:/mattermost/logs:rw
-      - ./mattermost/app/mattermost/plugins:/mattermost/plugins:rw
-      - ./mattermost/app/mattermost/client/plugins:/mattermost/client/plugins:rw
-      - ./mattermost/app/mattermost/bleve-indexes:/mattermost/bleve-indexes:rw
+      - ./mattermost/app/config:/mattermost/config:rw
+      - ./mattermost/app/data:/mattermost/data:rw
+      - ./mattermost/app/logs:/mattermost/logs:rw
+      - ./mattermost/app/plugins:/mattermost/plugins:rw
+      - ./mattermost/app/client/plugins:/mattermost/client/plugins:rw
+      - ./mattermost/app/bleve-indexes:/mattermost/bleve-indexes:rw
     environment:
       - TZ=UTC
       - MM_SQLSETTINGS_DRIVERNAME=postgres
