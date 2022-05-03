@@ -31,7 +31,7 @@ Before you begin, export your root hostname to your bash environment (e.g., `exp
 ```
 sudo apt-get update
 sudo apt install docker.io docker-compose certbot
-git clone https://github.com/azigler/osc-workshop-2022 && cd osc-workshop-2022
+git clone -b gitlab-with-https https://github.com/azigler/osc-workshop-2022 && cd osc-workshop-2022
 sh init.sh
 sh start.sh
 
