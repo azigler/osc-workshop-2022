@@ -1,35 +1,57 @@
 version: '3.6'
 services:
-  gitlab:
-    image: 'gitlab/gitlab-ce:latest'
-    container_name: gitlab
-    restart: always
-    hostname: 'gl1.andrewzigler.com'
-    environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gl1.andrewzigler.com'
-        gitlab_rails['gitlab_shell_ssh_port'] = 2255
-        letsencrypt['enable'] = true
-        letsencrypt['contact_emails'] = ['me@andrewzigler.com']
-        mattermost_external_url 'https://mm1.andrewzigler.com'
-        nginx['custom_nginx_config'] = "include /nginx/*.conf;"
-    ports:
-      - '80:80'
-      - '443:443'
-      - '2255:22'
+  postgres:
+    container_name: postgres_mattermost
+    image: postgres:13-alpine
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 100
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run/postgresql
     volumes:
-      - '/home/ubuntu/osc-workshop-2022/gitlab/config:/etc/gitlab'
-      - '/home/ubuntu/osc-workshop-2022/gitlab/logs:/var/log/gitlab'
-      - '/home/ubuntu/osc-workshop-2022/gitlab/data:/var/opt/gitlab'
-      - '/home/ubuntu/osc-workshop-2022/gitlab/nginx:/nginx'
-    shm_size: '256m'
+      - ./mattermost/postgres:/var/lib/postgresql/data
+    environment:
+      - TZ=UTC
+      - POSTGRES_USER=mmuser
+      - POSTGRES_PASSWORD=mmuser_password
+      - POSTGRES_DB=mattermost
+  mattermost:
+    depends_on:
+      - postgres
+    container_name: mattermost
+    image: mattermost/mattermost-enterprise-edition:6.6
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 200
+    read_only: false
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./mattermost/app/mattermost/config:/mattermost/config:rw
+      - ./mattermost/app/mattermost/data:/mattermost/data:rw
+      - ./mattermost/app/mattermost/logs:/mattermost/logs:rw
+      - ./mattermost/app/mattermost/plugins:/mattermost/plugins:rw
+      - ./mattermost/app/mattermost/client/plugins:/mattermost/client/plugins:rw
+      - ./mattermost/app/mattermost/bleve-indexes:/mattermost/bleve-indexes:rw
+    environment:
+      - TZ=UTC
+      - MM_SQLSETTINGS_DRIVERNAME=postgres
+      - MM_SQLSETTINGS_DATASOURCE=postgres://mmuser:mmuser_password@postgres:5432/mattermost?sslmode=disable&connect_timeout=10
+      - MM_BLEVESETTINGS_INDEXDIR=/mattermost/bleve-indexes
+      - MM_SERVICESETTINGS_SITEURL=http://localhost:8065
+    ports:
+      - 8065:8065
   healthchecks:
     image: lscr.io/linuxserver/healthchecks
     container_name: healthchecks
     environment:
       - PUID=1000
       - PGID=1000
-      - SITE_ROOT=https://hc1.andrewzigler.com
+      - SITE_ROOT=http://localhost:8000
       - SITE_NAME=Healthchecks
       - DEFAULT_FROM_EMAIL=me@andrewzigler.com
       - EMAIL_HOST=andrewzigler.com
@@ -40,7 +62,7 @@ services:
       - SUPERUSER_EMAIL=me@andrewzigler.com
       - SUPERUSER_PASSWORD=argonaut
     volumes:
-      - '/home/ubuntu/osc-workshop-2022/healthchecks:/config'
+      - './healthchecks:/config'
     ports:
       - 8000:8000
     restart: always
@@ -51,5 +73,5 @@ services:
     ports:
       - '8005:8005'
     volumes:
-      - '/home/ubuntu/osc-workshop-2022/deckofcards:/src'
+      - './deckofcards:/src'
     shm_size: '256m'
