@@ -4,14 +4,15 @@ services:
     image: 'gitlab/gitlab-ce:latest'
     container_name: gitlab
     restart: always
-    hostname: 'gl1.andrewzigler.com'
+    hostname: gl1.$HOSTNAME
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gl1.andrewzigler.com'
+        external_url 'https://gl1.$HOSTNAME'
         gitlab_rails['gitlab_shell_ssh_port'] = 2255
         letsencrypt['enable'] = true
-        letsencrypt['contact_emails'] = ['me@andrewzigler.com']
-        mattermost_external_url 'https://mm1.andrewzigler.com'
+        letsencrypt['contact_emails'] = ['me@$HOSTNAME']
+        mattermost_external_url 'https://mm1.$HOSTNAME'
+        mattermost['env'] = {'MM_FEATUREFLAGS_AppsEnabled' => "true"}
         nginx['custom_nginx_config'] = "include /nginx/*.conf;"
     ports:
       - '80:80'
@@ -29,15 +30,15 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - SITE_ROOT=https://hc1.andrewzigler.com
+      - SITE_ROOT=https://hc1.$HOSTNAME
       - SITE_NAME=Healthchecks
-      - DEFAULT_FROM_EMAIL=me@andrewzigler.com
-      - EMAIL_HOST=andrewzigler.com
+      - DEFAULT_FROM_EMAIL=me@$HOSTNAME
+      - EMAIL_HOST=$HOSTNAME
       - EMAIL_PORT=25
       - EMAIL_HOST_USER=andrew
       - EMAIL_HOST_PASSWORD=argonaut
       - EMAIL_USE_TLS=False
-      - SUPERUSER_EMAIL=me@andrewzigler.com
+      - SUPERUSER_EMAIL=me@$HOSTNAME
       - SUPERUSER_PASSWORD=argonaut
     volumes:
       - '/home/ubuntu/osc-workshop-2022/healthchecks:/config'

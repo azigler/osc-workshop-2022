@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ -z "$1" ] && echo "Please provide a domain name (e.g., example.com)" && exit 1
+[ -z "$HOSTNAME" ] && echo "Please export a hostname to your bash environment (e.g., export HOSTNAME=example.com)" && exit 1
 
 git submodule update --init
 sudo certbot certonly --non-interactive --standalone --agree-tos -m info@$1 -d hc1.$1
