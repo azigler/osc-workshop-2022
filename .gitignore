@@ -4,6 +4,10 @@ gitlab/data/*
 gitlab/logs/*
 healthchecks/hc.sqlite
 healthchecks/local_settings.py
-mattermost/*
-!mattermost/app/config/config.json
+mattermost/app/bleve-indexes/*
+mattermost/app/client/*
+mattermost/app/data/*
+mattermost/app/logs/*
+mattermost/app/plugins/*
+mattermost/postgres/*
 gitlab/*
