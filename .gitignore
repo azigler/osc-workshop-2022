@@ -5,4 +5,5 @@ gitlab/logs/*
 healthchecks/hc.sqlite
 healthchecks/local_settings.py
 mattermost/*
+!mattermost/app/config/config.json
 gitlab/*
