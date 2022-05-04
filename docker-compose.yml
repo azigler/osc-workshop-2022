@@ -53,14 +53,14 @@ services:
       - PGID=1000
       - SITE_ROOT=http://localhost:8000
       - SITE_NAME=Healthchecks
-      - DEFAULT_FROM_EMAIL=me@andrewzigler.com
-      - EMAIL_HOST=andrewzigler.com
+      - DEFAULT_FROM_EMAIL=me@example.com
+      - EMAIL_HOST=example.com
       - EMAIL_PORT=25
-      - EMAIL_HOST_USER=andrew
-      - EMAIL_HOST_PASSWORD=argonaut
+      - EMAIL_HOST_USER=me
+      - EMAIL_HOST_PASSWORD=healthchecks
       - EMAIL_USE_TLS=False
-      - SUPERUSER_EMAIL=me@andrewzigler.com
-      - SUPERUSER_PASSWORD=argonaut
+      - SUPERUSER_EMAIL=me@example.com
+      - SUPERUSER_PASSWORD=healthchecks
     volumes:
       - './healthchecks:/config'
     ports:
