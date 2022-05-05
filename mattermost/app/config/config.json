@@ -40,7 +40,7 @@
         "EnableOpenTracing": false,
         "EnableSecurityFixAlert": true,
         "EnableInsecureOutgoingConnections": false,
-        "AllowedUntrustedInternalConnections": "",
+        "AllowedUntrustedInternalConnections": "host.docker.internal",
         "EnableMultifactorAuthentication": false,
         "EnforceMultifactorAuthentication": false,
         "EnableUserAccessTokens": false,
