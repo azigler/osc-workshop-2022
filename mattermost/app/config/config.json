@@ -43,7 +43,7 @@
         "AllowedUntrustedInternalConnections": "host.docker.internal",
         "EnableMultifactorAuthentication": false,
         "EnforceMultifactorAuthentication": false,
-        "EnableUserAccessTokens": false,
+        "EnableUserAccessTokens": true,
         "AllowCorsFrom": "",
         "CorsExposedHeaders": "",
         "CorsAllowCredentials": false,
@@ -241,7 +241,8 @@
         "EmailNotificationContentsType": "full",
         "LoginButtonColor": "#0000",
         "LoginButtonBorderColor": "#2389D7",
-        "LoginButtonTextColor": "#2389D7"
+        "LoginButtonTextColor": "#2389D7",
+        "EnableInactivityEmail": true
     },
     "RateLimitSettings": {
         "Enable": false,
@@ -454,7 +455,6 @@
         "LinkMetadataTimeoutMilliseconds": 5000,
         "RestrictSystemAdmin": false,
         "UseNewSAMLLibrary": false,
-        "CloudUserLimit": 0,
         "CloudBilling": false,
         "EnableSharedChannels": false,
         "EnableRemoteClusterService": false
@@ -481,6 +481,7 @@
         "IndexPrefix": "",
         "LiveIndexingBatchSize": 1,
         "BulkIndexingTimeWindowSeconds": 3600,
+        "BatchSize": 10000,
         "RequestTimeoutSeconds": 30,
         "SkipTLSVerification": false,
         "Trace": ""
@@ -490,7 +491,8 @@
         "EnableIndexing": false,
         "EnableSearching": false,
         "EnableAutocomplete": false,
-        "BulkIndexingTimeWindowSeconds": 3600
+        "BulkIndexingTimeWindowSeconds": 3600,
+        "BatchSize": 10000
     },
     "DataRetentionSettings": {
         "EnableMessageDeletion": false,
@@ -520,7 +522,8 @@
     "JobSettings": {
         "RunJobs": true,
         "RunScheduler": true,
-        "CleanupJobsThresholdDays": -1
+        "CleanupJobsThresholdDays": -1,
+        "CleanupConfigThresholdDays": -1
     },
     "PluginSettings": {
         "Enable": true,
@@ -531,7 +534,7 @@
         "ClientDirectory": "./client/plugins",
         "Plugins": {
             "playbooks": {
-                "BotUserID": "fdj56njx5i8n8mi9fp4nqfwnjh"
+                "BotUserID": "upbmkoarjid8zfziychppgdc6r"
             }
         },
         "PluginStates": {

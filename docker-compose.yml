@@ -6,8 +6,6 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    pids_limit: 100
-    read_only: true
     tmpfs:
       - /tmp
       - /var/run/postgresql
@@ -22,21 +20,14 @@ services:
     depends_on:
       - postgres
     container_name: mattermost
-    image: mattermost/mattermost-enterprise-edition:6.6
+    image: mattermost/mattermost-enterprise-edition:latest
     restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    pids_limit: 200
-    read_only: false
-    tmpfs:
-      - /tmp
     volumes:
-      - ./mattermost/app/config:/mattermost/config:rw
-      - ./mattermost/app/data:/mattermost/data:rw
-      - ./mattermost/app/logs:/mattermost/logs:rw
-      - ./mattermost/app/plugins:/mattermost/plugins:rw
-      - ./mattermost/app/client/plugins:/mattermost/client/plugins:rw
-      - ./mattermost/app/bleve-indexes:/mattermost/bleve-indexes:rw
+      - ./mattermost/app/config:/mattermost/config
+      - ./mattermost/app/data:/mattermost/data
+      - ./mattermost/app/logs:/mattermost/logs
+      - ./mattermost/app/plugins:/mattermost/plugins
+      - ./mattermost/app/client/plugins:/mattermost/client/plugins
     environment:
       - TZ=UTC
       - MM_SQLSETTINGS_DRIVERNAME=postgres
