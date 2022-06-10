@@ -7,7 +7,8 @@
 Enter the following commands in a terminal:
 
 ```
-git clone -b mattermost-incident-resolution https://github.com/azigler/osc-workshop-2022 && cd osc-workshop-2022
+git clone -b mattermost-incident-resolution https://github.com/azigler/osc-workshop-2022
+cd osc-workshop-2022
 sh init.sh
 sh start.sh
 ```
@@ -21,6 +22,7 @@ http://localhost:8065
 - In System Console:
   - Enable integrations to override usernames: `true`
   - Enable integrations to override profile picture icons: `true`
+  - Enable Personal Access Tokens: `true`
 
 ### Healthchecks
 
@@ -41,7 +43,7 @@ http://localhost:8005
 - Rebuild `deckofcards`:
 
 ```
-sudo docker-compose up -d --build
+docker-compose up -d --build
 ```
 
 ## Usage
@@ -49,7 +51,7 @@ sudo docker-compose up -d --build
 Once everything is set up above, you can easily simulate an outage with the following command:
 
 ```
-sudo docker stop deckofcards
+docker stop deckofcards
 ```
 
 Make sure that in Healthchecks, you set the Period and Grace Time for the ping to both be 1 minute. After a minute, Healthchecks will report the outage to Mattermost.
@@ -57,7 +59,7 @@ Make sure that in Healthchecks, you set the Period and Grace Time for the ping t
 To simulate resolving the outage, use the following command:
 
 ```
-sudo docker start deckofcards
+docker start deckofcards
 ```
 
 After a minute, Healthchecks will report the restored service to Mattermost.
